@@ -90,4 +90,15 @@ public class ClauseController {
         clauses.add(clause);
         return true;
     }
+
+    /**
+     * Negates a given clause
+     * @param clause the clause to be negated
+     * @return the negated clause
+     */
+//    public static Clause negateClause(Clause clause){
+//        //Two cases
+//        //1. Only one literal in a clause
+//            //Negate that literal and return clause
+//    }
 }

@@ -17,12 +17,30 @@ public class Clause {
         this.number = number;
     }
 
+    /**
+     * Copy constructor
+     * @param clause the clause to be copied
+     */
+    public Clause(Clause clause){
+        this.literals = new ArrayList<>(clause.getLiterals());
+        this.combinedClauses = new ArrayList<>(clause.getCombinedClauses());
+        this.number = clause.getNumber();
+    }
+
     public List<Literal> getLiterals() {
         return literals;
     }
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public List<Integer> getCombinedClauses() {
+        return combinedClauses;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     @Override
