@@ -12,12 +12,25 @@ public class Literal {
         this.negation = negation;
     }
 
+    /**
+     * Copy constructor
+     * @param literal the literal to be copied
+     */
+    public Literal(Literal literal){
+        this.name = literal.name;
+        this.negation = literal.negation;
+    }
+
     public String getName() {
         return name;
     }
 
     public boolean isNegated() {
         return negation;
+    }
+
+    public void setNegation(boolean negation) {
+        this.negation = negation;
     }
 
     @Override

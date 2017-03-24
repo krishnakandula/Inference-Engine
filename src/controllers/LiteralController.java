@@ -12,4 +12,17 @@ public class LiteralController {
 
         return new Literal(name, isNegated);
     }
+
+    /**
+     * Creates a new literal that is the negation of the original
+     * @param literal the literal to be negated
+     * @return the negated literal
+     */
+    public static Literal negateLiteral(Literal literal){
+        Literal copy = new Literal(literal);
+        if(copy.isNegated())
+            copy.setNegation(false);
+
+        return copy;
+    }
 }

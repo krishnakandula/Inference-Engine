@@ -17,6 +17,11 @@ public class Clause {
         this.number = number;
     }
 
+    public Clause(List<Literal> literals){
+        this.literals = literals;
+        combinedClauses = new ArrayList<>(2);
+    }
+
     /**
      * Copy constructor
      * @param clause the clause to be copied

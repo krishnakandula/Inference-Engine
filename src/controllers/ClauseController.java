@@ -94,11 +94,35 @@ public class ClauseController {
     /**
      * Negates a given clause
      * @param clause the clause to be negated
-     * @return the negated clause
+     * @return the negated clause/clauses
      */
-//    public static Clause negateClause(Clause clause){
-//        //Two cases
-//        //1. Only one literal in a clause
-//            //Negate that literal and return clause
-//    }
+    public static List<Clause> negateClause(Clause clause){
+        //Create copy of clause
+        //Two cases
+        //1. Only one literal in a clause
+            //Negate that literal and return copied clause
+        //2. Multiple literals
+            //Negate each literal
+            //Create clause for each literal and add to list
+
+        Clause copy = new Clause(clause);
+        List<Clause> negatedClauses = new ArrayList<>();
+
+        if(clause.getLiterals().size() > 1){
+            Literal negatedLiteral = LiteralController.negateLiteral(clause.getLiterals().get(0));
+            clause.getLiterals().remove(0);
+            clause.getLiterals().add(negatedLiteral);
+            negatedClauses.add(copy);
+        } else {
+            for (Literal l : clause.getLiterals()) {
+                Literal negatedLiteral = LiteralController.negateLiteral(l);
+                List<Literal> literals = new ArrayList<>();
+                literals.add(negatedLiteral);
+                Clause c = new Clause(literals);
+                negatedClauses.add(c);
+            }
+        }
+
+        return negatedClauses;
+    }
 }
