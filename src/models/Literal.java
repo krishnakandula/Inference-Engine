@@ -29,4 +29,16 @@ public class Literal {
 
         return builder.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Literal))
+            return false;
+
+        //Check if name and negation are the same
+        if(this.name == ((Literal) obj).name && this.negation == ((Literal) obj).negation)
+            return false;
+
+        return true;
+    }
 }

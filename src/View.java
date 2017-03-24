@@ -1,4 +1,5 @@
 import controllers.ClauseController;
+import models.Clause;
 
 import java.io.File;
 
@@ -20,5 +21,11 @@ public class View {
 
         String clauseFile = args[0];
         ClauseController.initializeClauses(INPUT_FILE_PATH.concat(clauseFile));
+        startResolution();
+    }
+
+    private static void startResolution(){
+        Clause startingClause = ClauseController.selectStartingClause();
+
     }
 }

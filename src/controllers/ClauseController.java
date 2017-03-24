@@ -63,4 +63,31 @@ public class ClauseController {
 
         System.out.println(builder.toString());
     }
+
+    /**
+     * Randomly chooses one of the clauses to start resolution with
+     * @return the randomly chosen starting clause
+     */
+    public static Clause selectStartingClause(){
+        int range = clauses.size();
+        int index = (int) ((Math.random() * range));
+
+        return clauses.get(index);
+    }
+
+    /**
+     * Adds a new clause to the clause list
+     * @param clause the new clause to be added
+     * @return whether or not the clause was added
+     */
+    public static boolean addClause(Clause clause){
+        //Check to see if the clause already exists
+        if(clauses.contains(clause))
+            return false;
+
+        //Give clause new number
+        clause.setNumber(++clauseCount);
+        clauses.add(clause);
+        return true;
+    }
 }
