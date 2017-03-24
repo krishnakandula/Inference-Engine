@@ -4,6 +4,7 @@ out/
 
 #Input files
 *.txt
+*.in
 
 #Intellij Files
 .idea/
