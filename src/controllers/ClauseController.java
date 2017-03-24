@@ -49,10 +49,18 @@ public class ClauseController {
             System.out.println(e.getMessage());
         }
 
-        System.out.println(clauses);
+        printClauses();
     }
 
     public List<Clause> getClauses(){
         return clauses;
+    }
+
+    public static void printClauses(){
+        StringBuilder builder = new StringBuilder();
+        for(Clause c : clauses)
+            builder.append(c + "\n");
+
+        System.out.println(builder.toString());
     }
 }
