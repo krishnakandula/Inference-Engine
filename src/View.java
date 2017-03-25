@@ -16,8 +16,8 @@ public class View {
 
     public static void main(String... args){
         if(args.length < 1){
-            System.out.println("ERROR: Incorrect number of arguments.");
-            System.out.println("Please include a text file input.");
+            System.err.println("ERROR: Incorrect number of arguments.");
+            System.err.println("Please include a text file input.");
             System.exit(1);
         }
 
@@ -34,7 +34,11 @@ public class View {
             ClauseController.addClause(c);
 
         //Check to see if contradiction exists
+        List<Integer> contradiction = checkContradiction();
+        if(contradiction != null) {
             //Clause and its negation exist in knowledge base
+            System.out.println("DONE");
+        }
         //Choose a clause at random
         //Choose another clause containing negation of at least one of the literals
         //Resolve the two clauses and add resolution to clause list
@@ -58,7 +62,7 @@ public class View {
         for(int i = 0; i < ClauseController.getClauses().size() - 1; i++){
             Clause c = ClauseController.getClauses().get(i);
             //If more than one literal in clause, don't check for contradictions
-            if(c.getLiterals().size() < 1) {
+            if(c.getLiterals().size() <= 1) {
                 //negatedClauses list should only contain one element so get first one
                 Clause negated = ClauseController.negateClause(c).get(0);
 

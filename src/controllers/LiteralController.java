@@ -20,9 +20,8 @@ public abstract class LiteralController {
      */
     public static Literal negateLiteral(Literal literal){
         Literal copy = new Literal(literal);
-        if(copy.isNegated())
-            copy.setNegation(false);
-
+        copy.setNegation(!literal.isNegated());
+        
         return copy;
     }
 }
