@@ -82,6 +82,8 @@ public class View {
                     List<Integer> contradictionsList = new ArrayList<>();
                     contradictionsList.add(c.getNumber());
                     contradictionsList.add(contradictionIndex);
+
+                    return contradictionsList;
                 }
             }
         }
