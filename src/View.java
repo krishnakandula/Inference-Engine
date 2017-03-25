@@ -41,7 +41,8 @@ public class View {
     }
 
     /**
-     * Checks all the clauses in the knowledge base to see if a contradiction exists
+     * Checks all the clauses in the knowledge base to see if a contradiction exists.
+     * Contradictions should only be checked if the clause has a single literal.
      * @return the indices of the contradicting clauses
      */
     private static List<Integer> checkContradiction(){
@@ -49,27 +50,28 @@ public class View {
         //Check all clauses after current clause for contradiction
             //2 cases (for both check only literals with single clauses)
                 //1. Multiple literals in a clause
-                    //Check if negations of all literals exist in knowledge base
+                    //Don't check for this, this is why we have resolution
                 //2. Single literal in clause
                     //Check if negation of single literal exists in knowledge base
 
         //Loop only needs to check size - 1 clauses because inner loop checks last clause
         for(int i = 0; i < ClauseController.getClauses().size() - 1; i++){
             Clause c = ClauseController.getClauses().get(i);
-            List<Clause> negatedClauses = ClauseController.negateClause(c);
-            //Check all negated clauses to see if they exist
-            //TODO: FIX THIS
-            for(Clause negated : negatedClauses){
+            //If more than one literal in clause, don't check for contradictions
+            if(c.getLiterals().size() < 1) {
+                //negatedClauses list should only contain one element so get first one
+                Clause negated = ClauseController.negateClause(c).get(0);
+
                 //Nested inner loop only needs to check from i to end
                 boolean foundNegatedClause = false;
                 int contradictionIndex = -1;
-                for(int x = i; x < ClauseController.getClauses().size(); x++) {
-                    if(negated.equals(ClauseController.getClauses().get(x))) {
+                for (int x = i; x < ClauseController.getClauses().size(); x++) {
+                    if (negated.equals(ClauseController.getClauses().get(x))) {
                         foundNegatedClause = true;
                         contradictionIndex = ClauseController.getClauses().get(x).getNumber();
                     }
                 }
-                if(!foundNegatedClause)
+                if (!foundNegatedClause)
                     return null;
                 else {
                     //Return indices of contradictory statements
@@ -78,10 +80,7 @@ public class View {
                     contradictionsList.add(contradictionIndex);
                 }
             }
-
-            
         }
-
         return null;
     }
 }
