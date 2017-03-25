@@ -11,19 +11,11 @@ import java.util.List;
 /**
  * Created by Krishna Chaitanya Kandula on 3/24/2017.
  */
-public class ClauseController {
+public abstract class ClauseController {
     private static ClauseController controller;
     private static List<Clause> clauses;
 
     private static int clauseCount = 0;
-
-    private ClauseController(){}
-
-    public static ClauseController getClauseController(){
-        if(controller == null)
-            controller = new ClauseController();
-        return controller;
-    }
 
     /**
      * Reads in clauses from input file and initializes them
@@ -52,7 +44,7 @@ public class ClauseController {
         printClauses();
     }
 
-    public List<Clause> getClauses(){
+    public static List<Clause> getClauses(){
         return clauses;
     }
 
