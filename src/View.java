@@ -15,7 +15,7 @@ public class View {
             .getAbsolutePath()
             .concat("/");
 
-    private static Map<Integer, Integer> resolvedClauseCombinations;
+    public static Map<Integer, Integer> resolvedClauseCombinations;
 
     public static void main(String... args){
         if(args.length < 1){
