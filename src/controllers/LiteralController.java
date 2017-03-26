@@ -24,4 +24,16 @@ public abstract class LiteralController {
 
         return copy;
     }
+
+    /**
+     * Checks two literals to see if one is a negation of the other
+     * @param literal the first literal to check
+     * @param negated the second literal to check
+     * @return whether or not the literals are negations of each other
+     */
+    public static boolean isNegation(Literal literal, Literal negated){
+        if(literal.getName() == negated.getName() && !literal.isNegated() == negated.isNegated())
+            return true;
+        return false;
+    }
 }

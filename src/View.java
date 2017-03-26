@@ -1,11 +1,10 @@
 import controllers.ClauseController;
+import controllers.LiteralController;
 import models.Clause;
+import models.Literal;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Krishna Chaitanya Kandula on 3/24/2017.
@@ -50,9 +49,14 @@ public class View {
             //Choose a clause at random
             Clause randomClause = ClauseController.chooseRandomClause();
             //Choose another clause containing negation of at least one of the literals
-            //Check if a combination of those two clause resolutions has already been done
-                //If it hasn't resolve the two clauses and add resolution to clause list
+            Clause resolvingClause = chooseResolvingClause(randomClause);
+            if(resolvingClause != null){
+                //Check if a combination of those two clause resolutions has already been done
+                if(!checkResolvedClauseCombinations(randomClause.getNumber(), resolvingClause.getNumber())){
+                    //If it hasn't resolve the two clauses and add resolution to clause list
+                }
                 //If it has, continue the loop without resolving
+            }
         }
     }
 
@@ -125,7 +129,32 @@ public class View {
                 index = 0;
             else {
                 Clause resolvingClause = ClauseController.getClauses().get(index);
+                //Check if resolving clause contains a literal that is a negation of a literal in original clause
+                for(Literal l : clause.getLiterals()){
+                    for(Literal n : resolvingClause.getLiterals())
+                        if(LiteralController.isNegation(l, n))
+                            return resolvingClause;
+                }
             }
         }
+        return null;
+    }
+
+    /**
+     * Checks if a resolving clause combination already exists in the resolved combinations
+     * @param clauseNumber1 the first clause number to check
+     * @param clauseNumber2 the second clause number to check
+     * @return whether the combination already has been resolved
+     */
+    public static boolean checkResolvedClauseCombinations(int clauseNumber1, int clauseNumber2){
+        for(Map.Entry<Integer, Integer> entry : resolvedClauseCombinations.entrySet()){
+            //Check if
+            if(entry.getKey() == clauseNumber1 && entry.getValue() == clauseNumber2)
+                return true;
+            if(entry.getKey() == clauseNumber2 && entry.getValue() == clauseNumber1)
+                return true;
+        }
+
+        return false;
     }
 }
