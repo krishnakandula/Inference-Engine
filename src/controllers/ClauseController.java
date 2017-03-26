@@ -41,7 +41,7 @@ public abstract class ClauseController {
             System.out.println(e.getMessage());
         }
 
-        printClauses();
+//        printClauses();
     }
 
     public static List<Clause> getClauses(){
@@ -60,7 +60,7 @@ public abstract class ClauseController {
      * Randomly chooses one of the clauses to start resolution with
      * @return the randomly chosen starting clause
      */
-    public static Clause selectStartingClause(){
+    public static Clause chooseRandomClause(){
         int range = clauses.size();
         int index = (int) ((Math.random() * range));
 

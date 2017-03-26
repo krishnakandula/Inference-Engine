@@ -3,7 +3,9 @@ import models.Clause;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Krishna Chaitanya Kandula on 3/24/2017.
@@ -14,6 +16,8 @@ public class View {
             .getAbsolutePath()
             .concat("/");
 
+    private static Map<Integer, Integer> resolvedClauseCombinations;
+
     public static void main(String... args){
         if(args.length < 1){
             System.err.println("ERROR: Incorrect number of arguments.");
@@ -22,26 +26,34 @@ public class View {
         }
 
         String clauseFile = args[0];
+        resolvedClauseCombinations = new HashMap<>();
         ClauseController.initializeClauses(INPUT_FILE_PATH.concat(clauseFile));
         startResolution();
     }
 
     private static void startResolution(){
-        Clause startingClause = ClauseController.selectStartingClause();
+        Clause startingClause = ClauseController.chooseRandomClause();
 
         //Negate starting clause and add to Clause list
         for(Clause c : ClauseController.negateClause(startingClause))
             ClauseController.addClause(c);
 
-        //Check to see if contradiction exists
-        List<Integer> contradiction = checkContradiction();
-        if(contradiction != null) {
-            //Clause and its negation exist in knowledge base
-            System.out.println("DONE");
+        //Loop until a contradiction is reached
+        while(true) {
+            //Check to see if contradiction exists
+            List<Integer> contradiction = checkContradiction();
+            if (contradiction != null) {
+                //Clause and its negation exist in knowledge base
+                System.out.println("DONE");
+            }
+
+            //Choose a clause at random
+            Clause randomClause = ClauseController.chooseRandomClause();
+            //Choose another clause containing negation of at least one of the literals
+            //Check if a combination of those two clause resolutions has already been done
+                //If it hasn't resolve the two clauses and add resolution to clause list
+                //If it has, continue the loop without resolving
         }
-        //Choose a clause at random
-        //Choose another clause containing negation of at least one of the literals
-        //Resolve the two clauses and add resolution to clause list
     }
 
     /**
@@ -88,5 +100,32 @@ public class View {
             }
         }
         return null;
+    }
+
+    /**
+     * Finds a clause that contains at least one of the negated literals in the current clause
+     * @param clause the clause to be resolved
+     * @return clause containing at least one negated literal that will be used for resolution
+     */
+    public static Clause chooseResolvingClause(Clause clause){
+        //Start at random clause in list
+        //Iterate through list finding a clause with at least one negated literal from original clause
+        //return that clause
+        int range = ClauseController.getClauses().size();
+        int index;
+
+        //Select a starting index that doesn't equal the clause's index
+        do {
+            index = (int) ((Math.random()) * range);
+        } while (index != clause.getNumber());
+
+        while(index != clause.getNumber()){
+            //Index reaches end of list, loop back around to beginning
+            if(index == range)
+                index = 0;
+            else {
+                Clause resolvingClause = ClauseController.getClauses().get(index);
+            }
+        }
     }
 }
