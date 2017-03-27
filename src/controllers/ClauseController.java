@@ -117,4 +117,35 @@ public abstract class ClauseController {
 
         return negatedClauses;
     }
+
+    /**
+     * Takes two clauses and resolves them
+     * @param c the first clause to resolve
+     * @param c2 the second clause to resolve
+     * @return a list of the resolved clauses
+     */
+    public static List<Clause> resolveClauses(Clause c, Clause c2){
+        //Clone both the clauses
+        Clause clone = new Clause(c);
+        Clause clone2 = new Clause(c2);
+        //Iterate through each literal in first clause
+        for(int i = 0; i < clone.getLiterals().size(); i++){
+            Literal l = clone.getLiterals().get(i);
+            for(int x = 0; x < clone.getLiterals().size(); x++){
+                Literal l2 = clone.getLiterals().get(x);
+                //Find literal in second clause that is the negation of the original literal
+                if(LiteralController.isNegation(l, l2)){
+                    //Remove both literals from the clones
+                    clone.getLiterals().remove(i);
+                    clone2.getLiterals().remove(x);
+                }
+            }
+        }
+        //Create a list of the cloned clauses
+        List<Clause> resolvedClause = new ArrayList<>();
+        resolvedClause.add(clone);
+        resolvedClause.add(clone2);
+
+        return resolvedClause;
+    }
 }
