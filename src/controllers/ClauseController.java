@@ -77,6 +77,7 @@ public abstract class ClauseController {
             c = chooseRandomClause();
 
         return c;
+//        return clauses.get(clauses.size() - 1);
     }
 
     /**

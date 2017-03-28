@@ -28,12 +28,13 @@ public class View {
         resolvedClauseCombinations = new HashMap<>();
         ClauseController.initializeClauses(INPUT_FILE_PATH.concat(clauseFile));
         Clause contradiction = startResolution();
-        ClauseController.printClauses();
         printFinalPath(contradiction, new ClauseComparator());
     }
 
     private static Clause startResolution(){
         Clause startingClause = ClauseController.chooseStartingClause();
+        System.out.print("Starting clause: ");
+        System.out.println(startingClause);
 
         //Negate starting clause and add to Clause list
         for(Clause c : ClauseController.negateClause(startingClause))
@@ -72,7 +73,6 @@ public class View {
                 }
                 //If it has, continue the loop without resolving
             }
-            ClauseController.printClauses();
         }
     }
 
@@ -100,12 +100,15 @@ public class View {
 
                 //Nested inner loop only needs to check from i to end
                 for (int x = i; x < ClauseController.getClauses().size(); x++) {
-                    if (negated.equals(ClauseController.getClauses().get(x))) {
-                        List<Integer> contradictionsList = new ArrayList<>();
-                        contradictionsList.add(c.getNumber());
-                        contradictionsList.add(x);
+                    //Only check clauses with 1 literal
+                    if(ClauseController.getClauses().get(x).getLiterals().size() == 1) {
+                        if (negated.equals(ClauseController.getClauses().get(x))) {
+                            List<Integer> contradictionsList = new ArrayList<>();
+                            contradictionsList.add(c.getNumber());
+                            contradictionsList.add(x);
 
-                        return contradictionsList;
+                            return contradictionsList;
+                        }
                     }
                 }
             }
