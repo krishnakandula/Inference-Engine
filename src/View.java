@@ -44,6 +44,7 @@ public class View {
             if (contradiction != null) {
                 //Clause and its negation exist in knowledge base
                 System.out.println("DONE");
+                return;
             }
 
             //Choose a clause at random
@@ -127,7 +128,7 @@ public class View {
         //Select a starting index that doesn't equal the clause's index
         do {
             index = (int) ((Math.random()) * range);
-        } while (index != clause.getNumber());
+        } while (index == clause.getNumber());
 
         while(index != clause.getNumber()){
             //Index reaches end of list, loop back around to beginning
@@ -142,6 +143,7 @@ public class View {
                             return resolvingClause;
                 }
             }
+            index++;
         }
         return null;
     }
