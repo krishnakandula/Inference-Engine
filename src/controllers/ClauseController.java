@@ -68,6 +68,18 @@ public abstract class ClauseController {
     }
 
     /**
+     * Randomly chooses a starting clause that has more than 1 literal
+     * @return
+     */
+    public static Clause chooseStartingClause(){
+        Clause c = chooseRandomClause();
+        while(c.getLiterals().size() == 1)
+            c = chooseRandomClause();
+
+        return c;
+    }
+
+    /**
      * Adds a new clause to the clause list
      * @param clause the new clause to be added
      * @return whether or not the clause was added

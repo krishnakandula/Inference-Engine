@@ -28,11 +28,12 @@ public class View {
         resolvedClauseCombinations = new HashMap<>();
         ClauseController.initializeClauses(INPUT_FILE_PATH.concat(clauseFile));
         Clause contradiction = startResolution();
+        ClauseController.printClauses();
         printFinalPath(contradiction, new ClauseComparator());
     }
 
     private static Clause startResolution(){
-        Clause startingClause = ClauseController.chooseRandomClause();
+        Clause startingClause = ClauseController.chooseStartingClause();
 
         //Negate starting clause and add to Clause list
         for(Clause c : ClauseController.negateClause(startingClause))
@@ -49,6 +50,8 @@ public class View {
                 Clause contradiction2 = ClauseController.getClauses().get(contradiction.get(1));
 
                 Clause nullClause = ClauseController.resolveClauses(contradiction1, contradiction2);
+                //Add the null clause to the list
+                ClauseController.addClause(nullClause);
                 //Return last added clause
                 return nullClause;
             }
@@ -177,6 +180,11 @@ public class View {
         System.out.println(String.format("Size of final clause set: %d", ClauseController.getClauses().size()));
     }
 
+    /**
+     *
+     * @param contradiction
+     * @param finalPath
+     */
     private static void printFinalPathHelper(Clause contradiction, List<Clause> finalPath){
         if(!contradiction.getCombinedClauses().isEmpty()){
             int index1 = contradiction.getCombinedClauses().get(0);
@@ -193,6 +201,9 @@ public class View {
     }
 }
 
+/**
+ *
+ */
 class ClauseComparator implements Comparator<Clause>{
     @Override
     public int compare(Clause o1, Clause o2) {
