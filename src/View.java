@@ -27,10 +27,11 @@ public class View {
         String clauseFile = args[0];
         resolvedClauseCombinations = new HashMap<>();
         ClauseController.initializeClauses(INPUT_FILE_PATH.concat(clauseFile));
-        startResolution();
+        Clause contradiction = startResolution();
+        printFinalPath(contradiction, new ClauseComparator());
     }
 
-    private static void startResolution(){
+    private static Clause startResolution(){
         Clause startingClause = ClauseController.chooseRandomClause();
 
         //Negate starting clause and add to Clause list
@@ -43,9 +44,8 @@ public class View {
             List<Integer> contradiction = checkContradiction();
             if (contradiction != null) {
                 //Clause and its negation exist in knowledge base
-                System.out.println("DONE");
-                ClauseController.printClauses();
-                return;
+                //Return last added clause
+                return ClauseController.getClauses().get(ClauseController.getClauses().size() - 1);
             }
 
             //Choose a clause at random
@@ -60,7 +60,6 @@ public class View {
                     //Add resolved clause combo to map
                     resolvedClauseCombinations.put(resolvedClause.getCombinedClauses().get(0),
                             resolvedClause.getCombinedClauses().get(1));
-                    System.out.println(resolvedClause);
                     ClauseController.addClause(resolvedClause);
                 }
                 //If it has, continue the loop without resolving
@@ -165,5 +164,41 @@ public class View {
         }
 
         return false;
+    }
+
+    /**
+     *
+     * @param contradiction
+     */
+    public static void printFinalPath(Clause contradiction, Comparator<Clause> comparator){
+        List<Clause> finalPath = new ArrayList<>();
+        printFinalPathHelper(contradiction, finalPath);
+        finalPath.add(contradiction);
+        Collections.sort(finalPath, comparator);
+        for(Clause s : finalPath)
+            System.out.println(s);
+        System.out.println(String.format("Size of final clause set: %d", ClauseController.getClauses().size()));
+    }
+
+    private static void printFinalPathHelper(Clause contradiction, List<Clause> finalPath){
+        if(!contradiction.getCombinedClauses().isEmpty()){
+            int index1 = contradiction.getCombinedClauses().get(0);
+            int index2 = contradiction.getCombinedClauses().get(1);
+            Clause c1 = ClauseController.getClauses().get(index1);
+            Clause c2 = ClauseController.getClauses().get(index2);
+            printFinalPathHelper(c1, finalPath);
+            printFinalPathHelper(c2, finalPath);
+            if(!finalPath.contains(c1))
+                finalPath.add(c1);
+            if(!finalPath.contains(c2))
+                finalPath.add(c2);
+        }
+    }
+}
+
+class ClauseComparator implements Comparator<Clause>{
+    @Override
+    public int compare(Clause o1, Clause o2) {
+        return o1.getNumber() - o2.getNumber();
     }
 }

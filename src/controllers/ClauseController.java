@@ -15,7 +15,7 @@ public abstract class ClauseController {
     private static ClauseController controller;
     private static List<Clause> clauses;
 
-    private static int clauseCount = 0;
+    private static int clauseCount = -1;
 
     /**
      * Reads in clauses from input file and initializes them
