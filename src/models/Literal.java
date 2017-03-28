@@ -49,9 +49,9 @@ public class Literal {
             return false;
 
         //Check if name and negation are the same
-        if(this.name.equals(((Literal) obj).getName()) && this.negation == ((Literal) obj).negation)
-            return false;
+        if(this.name.equals(((Literal) obj).getName()) && this.negation == ((Literal) obj).isNegated())
+            return true;
 
-        return true;
+        return false;
     }
 }

@@ -44,8 +44,13 @@ public class View {
             List<Integer> contradiction = checkContradiction();
             if (contradiction != null) {
                 //Clause and its negation exist in knowledge base
+                //Resolve both of them
+                Clause contradiction1 = ClauseController.getClauses().get(contradiction.get(0));
+                Clause contradiction2 = ClauseController.getClauses().get(contradiction.get(1));
+
+                Clause nullClause = ClauseController.resolveClauses(contradiction1, contradiction2);
                 //Return last added clause
-                return ClauseController.getClauses().get(ClauseController.getClauses().size() - 1);
+                return nullClause;
             }
 
             //Choose a clause at random
@@ -64,6 +69,7 @@ public class View {
                 }
                 //If it has, continue the loop without resolving
             }
+            ClauseController.printClauses();
         }
     }
 
@@ -90,23 +96,14 @@ public class View {
                 Clause negated = ClauseController.negateClause(c).get(0);
 
                 //Nested inner loop only needs to check from i to end
-                boolean foundNegatedClause = false;
-                int contradictionIndex = -1;
                 for (int x = i; x < ClauseController.getClauses().size(); x++) {
                     if (negated.equals(ClauseController.getClauses().get(x))) {
-                        foundNegatedClause = true;
-                        contradictionIndex = ClauseController.getClauses().get(x).getNumber();
-                    }
-                }
-                if (!foundNegatedClause)
-                    return null;
-                else {
-                    //Return indices of contradictory statements
-                    List<Integer> contradictionsList = new ArrayList<>();
-                    contradictionsList.add(c.getNumber());
-                    contradictionsList.add(contradictionIndex);
+                        List<Integer> contradictionsList = new ArrayList<>();
+                        contradictionsList.add(c.getNumber());
+                        contradictionsList.add(x);
 
-                    return contradictionsList;
+                        return contradictionsList;
+                    }
                 }
             }
         }

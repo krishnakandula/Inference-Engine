@@ -66,12 +66,15 @@ public class Clause {
         if(!(obj instanceof Clause))
             return false;
 
+        if(this.getLiterals().size() != ((Clause) obj).getLiterals().size())
+            return false;
+
         //Check all literals. If even one is different, return true
         for(Literal l : literals){
             if(!((Clause) obj).literals.contains(l))
-                return true;
+                return false;
         }
 
-        return false;
+        return true;
     }
 }

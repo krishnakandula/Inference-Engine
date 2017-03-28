@@ -100,7 +100,7 @@ public abstract class ClauseController {
         Clause copy = new Clause(clause);
         List<Clause> negatedClauses = new ArrayList<>();
 
-        if(clause.getLiterals().size() > 1){
+        if(clause.getLiterals().size() < 1){
             Literal negatedLiteral = LiteralController.negateLiteral(clause.getLiterals().get(0));
             clause.getLiterals().remove(0);
             clause.getLiterals().add(negatedLiteral);
@@ -146,6 +146,8 @@ public abstract class ClauseController {
         resolvedClause.getCombinedClauses().add(clone.getNumber());
         resolvedClause.getCombinedClauses().add(clone2.getNumber());
 
+        if(resolvedClause.getLiterals().isEmpty())
+            resolvedClause.setNumber(Integer.MAX_VALUE);
         return resolvedClause;
     }
 
