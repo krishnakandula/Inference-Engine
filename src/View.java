@@ -44,6 +44,7 @@ public class View {
             if (contradiction != null) {
                 //Clause and its negation exist in knowledge base
                 System.out.println("DONE");
+//                ClauseController.printClauses();
                 return;
             }
 
@@ -142,8 +143,8 @@ public class View {
                         if(LiteralController.isNegation(l, n))
                             return resolvingClause;
                 }
+                index++;
             }
-            index++;
         }
         return null;
     }

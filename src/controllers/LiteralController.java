@@ -32,7 +32,7 @@ public abstract class LiteralController {
      * @return whether or not the literals are negations of each other
      */
     public static boolean isNegation(Literal literal, Literal negated){
-        if(literal.getName() == negated.getName() && !literal.isNegated() == negated.isNegated())
+        if(literal.getName().equals(negated.getName()) && !literal.isNegated() == negated.isNegated())
             return true;
         return false;
     }

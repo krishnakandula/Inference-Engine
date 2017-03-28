@@ -28,7 +28,7 @@ public class Clause {
      */
     public Clause(Clause clause){
         this.literals = new ArrayList<>(clause.getLiterals());
-        this.combinedClauses = new ArrayList<>(clause.getCombinedClauses());
+        this.combinedClauses = new ArrayList<>();
         this.number = clause.getNumber();
     }
 

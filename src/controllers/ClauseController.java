@@ -131,8 +131,8 @@ public abstract class ClauseController {
         //Iterate through each literal in first clause
         for(int i = 0; i < clone.getLiterals().size(); i++){
             Literal l = clone.getLiterals().get(i);
-            for(int x = 0; x < clone.getLiterals().size(); x++){
-                Literal l2 = clone.getLiterals().get(x);
+            for(int x = 0; x < clone2.getLiterals().size(); x++){
+                Literal l2 = clone2.getLiterals().get(x);
                 //Find literal in second clause that is the negation of the original literal
                 if(LiteralController.isNegation(l, l2)){
                     //Remove both literals from the clones
