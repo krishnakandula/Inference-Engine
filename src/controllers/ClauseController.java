@@ -122,9 +122,9 @@ public abstract class ClauseController {
      * Takes two clauses and resolves them
      * @param c the first clause to resolve
      * @param c2 the second clause to resolve
-     * @return a list of the resolved clauses
+     * @return the resolved clause
      */
-    public static List<Clause> resolveClauses(Clause c, Clause c2){
+    public static Clause resolveClauses(Clause c, Clause c2){
         //Clone both the clauses
         Clause clone = new Clause(c);
         Clause clone2 = new Clause(c2);
@@ -141,11 +141,24 @@ public abstract class ClauseController {
                 }
             }
         }
-        //Create a list of the cloned clauses
-        List<Clause> resolvedClause = new ArrayList<>();
-        resolvedClause.add(clone);
-        resolvedClause.add(clone2);
+
+        Clause resolvedClause = concatenateClauses(clone, clone2);
+        resolvedClause.getCombinedClauses().add(clone.getNumber());
+        resolvedClause.getCombinedClauses().add(clone2.getNumber());
 
         return resolvedClause;
+    }
+
+    /**
+     * Concatenates the literals of one clause to another
+     * @param c
+     * @param c2
+     * @return the clause with the concatenated literals
+     */
+    public static Clause concatenateClauses(Clause c, Clause c2){
+        for(Literal l : c2.getLiterals())
+            c.getLiterals().add(l);
+
+        return c;
     }
 }

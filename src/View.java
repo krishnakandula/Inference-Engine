@@ -54,6 +54,12 @@ public class View {
                 //Check if a combination of those two clause resolutions has already been done
                 if(!checkResolvedClauseCombinations(randomClause.getNumber(), resolvingClause.getNumber())){
                     //If it hasn't resolve the two clauses and add resolution to clause list
+                    Clause resolvedClause = ClauseController.resolveClauses(randomClause, resolvingClause);
+                    //Add resolved clause combo to map
+                    resolvedClauseCombinations.put(resolvedClause.getCombinedClauses().get(0),
+                            resolvedClause.getCombinedClauses().get(1));
+                    System.out.println(resolvedClause);
+                    ClauseController.addClause(resolvedClause);
                 }
                 //If it has, continue the loop without resolving
             }
