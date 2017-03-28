@@ -156,8 +156,10 @@ public abstract class ClauseController {
      * @return the clause with the concatenated literals
      */
     public static Clause concatenateClauses(Clause c, Clause c2){
-        for(Literal l : c2.getLiterals())
-            c.getLiterals().add(l);
+        for(Literal l : c2.getLiterals()) {
+            if(!c.getLiterals().contains(l))
+                c.getLiterals().add(l);
+        }
 
         return c;
     }
