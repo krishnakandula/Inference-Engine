@@ -61,39 +61,41 @@ public abstract class ClauseController {
      * @return the randomly chosen starting clause
      */
     public static Clause chooseRandomClause(){
-        int midpoint = clauses.size() / 2;
-        if(midpoint > clauses.size())
-            midpoint = 0;
+        Clause random;
+        do {
+            int midpoint = clauses.size() / 2;
+            if (midpoint > clauses.size())
+                midpoint = 0;
 
-        double prob = Math.random();
-        int min;
-        int max;
-        if(prob > .75) {
-            min = 0;
-            max = midpoint;
-        }
-        else {
-            min = midpoint;
-            max = clauses.size();
-        }
-        int range = max - min;
-        int index = (int) ((Math.random() * range) + min);
-
-        return clauses.get(index);
+            double prob = Math.random();
+            int min;
+            int max;
+            if (prob > .75) {
+                min = 0;
+                max = midpoint;
+            } else {
+                min = midpoint;
+                max = clauses.size();
+            }
+            int range = max - min;
+            int index = (int) ((Math.random() * range) + min);
+            random = clauses.get(index);
+        } while(random.getLiterals().size() <= 1);  //Get clause with > 1 literal
+        return random;
     }
 
     /**
      * Randomly chooses a starting clause that has more than 1 literal
      * @return
      */
-    public static Clause chooseStartingClause(){
-        Clause c = chooseRandomClause();
-        while(c.getLiterals().size() == 1)
-            c = chooseRandomClause();
-
-        return c;
-//        return clauses.get(clauses.size() - 1);
-    }
+//    public static Clause chooseStartingClause(){
+//        Clause c = chooseRandomClause();
+//        while(c.getLiterals().size() == 1)
+//            c = chooseRandomClause();
+//
+//        return c;
+////        return clauses.get(clauses.size() - 1);
+//    }
 
     /**
      * Adds a new clause to the clause list
