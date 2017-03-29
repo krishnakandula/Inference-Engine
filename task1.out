@@ -1,0 +1,6 @@
+4.  ~okH2 ~NoLeak  {}
+10.  okH2  {}
+16.  ~NoLeak  {4 10 }
+18.  ~okH2  {4 16 }
+19.   {10 18 }
+Size of final clause set: 20

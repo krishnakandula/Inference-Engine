@@ -1,0 +1,14 @@
+0.  ~NoLeakH1 ~NoLeakH2 NoLeak  {}
+1.  ~okH1 NoLeakH1  {}
+4.  okH2 V2 NoLeakH2  {}
+5.  ~okH2  {}
+6.  okH1  {}
+7.  V2  {}
+8.  NoLeak  {}
+9.  okH2 NoLeakH2  {4 7 }
+10.  ~NoLeakH1 ~NoLeakH2  {0 8 }
+11.  NoLeakH2  {9 5 }
+12.  NoLeakH1  {10 11 }
+13.  ~okH1  {1 12 }
+14.   {6 13 }
+Size of final clause set: 15
