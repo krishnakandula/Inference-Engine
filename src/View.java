@@ -32,14 +32,6 @@ public class View {
     }
 
     private static Clause startResolution(){
-//        Clause startingClause = ClauseController.chooseStartingClause();
-//        System.out.print("Starting clause: ");
-//        System.out.println(startingClause);
-
-        //Negate starting clause and add to Clause list
-//        for(Clause c : ClauseController.negateClause(startingClause))
-//            ClauseController.addClause(c);
-
         //Loop until a contradiction is reached
         while(true) {
             //Check to see if contradiction exists
@@ -66,12 +58,10 @@ public class View {
                 if(!checkResolvedClauseCombinations(randomClause.getNumber(), resolvingClause.getNumber())){
                     //If it hasn't resolve the two clauses and add resolution to clause list
                     Clause resolvedClause = ClauseController.resolveClauses(randomClause, resolvingClause);
-//                    resolvedClause = ClauseController.simplifyResolvedClause(resolvedClause);
                     //Add resolved clause combo to map
                     resolvedClauseCombinations.put(resolvedClause.getCombinedClauses().get(0),
                             resolvedClause.getCombinedClauses().get(1));
                     ClauseController.addClause(resolvedClause);
-//                    ClauseController.printClauses();
                 }
                 //If it has, continue the loop without resolving
             }
@@ -124,15 +114,6 @@ public class View {
      * @return clause containing at least one negated literal that will be used for resolution
      */
     public static Clause chooseResolvingClause(Clause clause){
-//        double prob = Math.random();
-//        Clause c;
-//        if(prob > 0.75) {
-//            c = chooseRandomResolvingClause(clause);
-//        } else {
-//            c = chooseEndingResolvingClause(clause);
-//        }
-//
-//        return c;
         return chooseRandomResolvingClause(clause);
     }
 
@@ -161,8 +142,6 @@ public class View {
             index = (int) ((Math.random()) * range);
         } while (index == clause.getNumber());
 
-        int max = 0;
-        int maxIndex = -1;
         while(index != clause.getNumber()){
             //Index reaches end of list, loop back around to beginning
             if(index == range)
@@ -170,7 +149,6 @@ public class View {
             else {
                 Clause resolvingClause = ClauseController.getClauses().get(index);
                 //Check if resolving clause contains a literal that is a negation of a literal in original clause
-//                int currentMax = 0;
                 //Resolving clause needs to have only one literal
                 if(resolvingClause.getLiterals().size() == 1) {
                     for (Literal l : clause.getLiterals()) {
@@ -179,19 +157,11 @@ public class View {
                                 return resolvingClause;
                     }
                 }
-//                if(currentMax > max){
-//                    max = currentMax;
-//                    maxIndex = index;
-//                }
                 index++;
             }
         }
         //No resolving clauses
         return null;
-//        if(maxIndex < 0)
-//            return null;
-//        Clause resolvingClause = ClauseController.getClauses().get(maxIndex);
-//        return resolvingClause;
     }
 
     /**

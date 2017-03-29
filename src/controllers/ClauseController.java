@@ -40,8 +40,6 @@ public abstract class ClauseController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-//        printClauses();
     }
 
     public static List<Clause> getClauses(){
@@ -83,19 +81,6 @@ public abstract class ClauseController {
         } while(random.getLiterals().size() <= 1);  //Get clause with > 1 literal
         return random;
     }
-
-    /**
-     * Randomly chooses a starting clause that has more than 1 literal
-     * @return
-     */
-//    public static Clause chooseStartingClause(){
-//        Clause c = chooseRandomClause();
-//        while(c.getLiterals().size() == 1)
-//            c = chooseRandomClause();
-//
-//        return c;
-////        return clauses.get(clauses.size() - 1);
-//    }
 
     /**
      * Adds a new clause to the clause list
@@ -180,23 +165,6 @@ public abstract class ClauseController {
 
         if(resolvedClause.getLiterals().isEmpty())
             resolvedClause.setNumber(Integer.MAX_VALUE);
-        return resolvedClause;
-    }
-
-    public static Clause simplifyResolvedClause(Clause resolvedClause){
-        //Iterate through all clauses
-        //If clause size is 1, and resolvedClause contains that clause, remove it
-        for(Clause c : clauses){
-            if(c.getLiterals().size() == 1){
-                Literal lit = c.getLiterals().get(0);
-                for(int i = 0; i < resolvedClause.getLiterals().size(); i++){
-                    Literal l = resolvedClause.getLiterals().get(i);
-                    if(l.equals(lit) || LiteralController.isNegation(lit, l))
-                        resolvedClause.getLiterals().remove(i);
-                }
-            }
-        }
-
         return resolvedClause;
     }
 
