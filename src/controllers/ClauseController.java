@@ -61,8 +61,23 @@ public abstract class ClauseController {
      * @return the randomly chosen starting clause
      */
     public static Clause chooseRandomClause(){
-        int range = clauses.size();
-        int index = (int) ((Math.random() * range));
+        int midpoint = clauses.size() / 2;
+        if(midpoint > clauses.size())
+            midpoint = 0;
+
+        double prob = Math.random();
+        int min;
+        int max;
+        if(prob > .75) {
+            min = 0;
+            max = midpoint;
+        }
+        else {
+            min = midpoint;
+            max = clauses.size();
+        }
+        int range = max - min;
+        int index = (int) ((Math.random() * range) + min);
 
         return clauses.get(index);
     }
@@ -113,7 +128,7 @@ public abstract class ClauseController {
         Clause copy = new Clause(clause);
         List<Clause> negatedClauses = new ArrayList<>();
 
-        if(clause.getLiterals().size() < 1){
+        if(clause.getLiterals().size() == 1){
             Literal negatedLiteral = LiteralController.negateLiteral(clause.getLiterals().get(0));
             clause.getLiterals().remove(0);
             clause.getLiterals().add(negatedLiteral);
@@ -150,7 +165,9 @@ public abstract class ClauseController {
                 if(LiteralController.isNegation(l, l2)){
                     //Remove both literals from the clones
                     clone.getLiterals().remove(i);
+                    i--;
                     clone2.getLiterals().remove(x);
+                    x--;
                 }
             }
         }
@@ -161,6 +178,23 @@ public abstract class ClauseController {
 
         if(resolvedClause.getLiterals().isEmpty())
             resolvedClause.setNumber(Integer.MAX_VALUE);
+        return resolvedClause;
+    }
+
+    public static Clause simplifyResolvedClause(Clause resolvedClause){
+        //Iterate through all clauses
+        //If clause size is 1, and resolvedClause contains that clause, remove it
+        for(Clause c : clauses){
+            if(c.getLiterals().size() == 1){
+                Literal lit = c.getLiterals().get(0);
+                for(int i = 0; i < resolvedClause.getLiterals().size(); i++){
+                    Literal l = resolvedClause.getLiterals().get(i);
+                    if(l.equals(lit) || LiteralController.isNegation(lit, l))
+                        resolvedClause.getLiterals().remove(i);
+                }
+            }
+        }
+
         return resolvedClause;
     }
 
