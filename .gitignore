@@ -3,8 +3,8 @@
 out/
 
 #Input files
-*.txt
-*.in
+#*.txt
+#*.in
 
 #Intellij Files
 .idea/
