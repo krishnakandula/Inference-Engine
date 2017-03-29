@@ -1,14 +1,8 @@
-package controllers;
-
-import models.Clause;
-import models.Literal;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by Krishna Chaitanya Kandula on 3/24/2017.

@@ -1,8 +1,3 @@
-import controllers.ClauseController;
-import controllers.LiteralController;
-import models.Clause;
-import models.Literal;
-
 import java.io.File;
 import java.util.*;
 
