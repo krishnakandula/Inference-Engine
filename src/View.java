@@ -170,24 +170,28 @@ public class View {
             else {
                 Clause resolvingClause = ClauseController.getClauses().get(index);
                 //Check if resolving clause contains a literal that is a negation of a literal in original clause
-                int currentMax = 0;
-                for(Literal l : clause.getLiterals()){
-                    for(Literal n : resolvingClause.getLiterals())
-                        if(LiteralController.isNegation(l, n))
-                            currentMax++;
+//                int currentMax = 0;
+                //Resolving clause needs to have only one literal
+                if(resolvingClause.getLiterals().size() == 1) {
+                    for (Literal l : clause.getLiterals()) {
+                        for (Literal n : resolvingClause.getLiterals())
+                            if (LiteralController.isNegation(l, n))
+                                return resolvingClause;
+                    }
                 }
-                if(currentMax > max){
-                    max = currentMax;
-                    maxIndex = index;
-                }
+//                if(currentMax > max){
+//                    max = currentMax;
+//                    maxIndex = index;
+//                }
                 index++;
             }
         }
         //No resolving clauses
-        if(maxIndex < 0)
-            return null;
-        Clause resolvingClause = ClauseController.getClauses().get(maxIndex);
-        return resolvingClause;
+        return null;
+//        if(maxIndex < 0)
+//            return null;
+//        Clause resolvingClause = ClauseController.getClauses().get(maxIndex);
+//        return resolvingClause;
     }
 
     /**
