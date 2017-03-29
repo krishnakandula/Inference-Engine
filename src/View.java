@@ -32,13 +32,13 @@ public class View {
     }
 
     private static Clause startResolution(){
-        Clause startingClause = ClauseController.chooseStartingClause();
-        System.out.print("Starting clause: ");
-        System.out.println(startingClause);
+//        Clause startingClause = ClauseController.chooseStartingClause();
+//        System.out.print("Starting clause: ");
+//        System.out.println(startingClause);
 
         //Negate starting clause and add to Clause list
-        for(Clause c : ClauseController.negateClause(startingClause))
-            ClauseController.addClause(c);
+//        for(Clause c : ClauseController.negateClause(startingClause))
+//            ClauseController.addClause(c);
 
         //Loop until a contradiction is reached
         while(true) {
@@ -62,6 +62,8 @@ public class View {
             //Choose another clause containing negation of at least one of the literals
             Clause resolvingClause = chooseResolvingClause(randomClause);
             if(resolvingClause != null){
+//                System.out.println(randomClause + " " + resolvingClause);
+//                ClauseController.printClauses();
                 //Check if a combination of those two clause resolutions has already been done
                 if(!checkResolvedClauseCombinations(randomClause.getNumber(), resolvingClause.getNumber())){
                     //If it hasn't resolve the two clauses and add resolution to clause list
@@ -70,6 +72,7 @@ public class View {
                     resolvedClauseCombinations.put(resolvedClause.getCombinedClauses().get(0),
                             resolvedClause.getCombinedClauses().get(1));
                     ClauseController.addClause(resolvedClause);
+//                    ClauseController.printClauses();
                 }
                 //If it has, continue the loop without resolving
             }
