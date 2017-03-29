@@ -62,7 +62,7 @@ public class View {
             //Choose another clause containing negation of at least one of the literals
             Clause resolvingClause = chooseResolvingClause(randomClause);
             if(resolvingClause != null){
-//                System.out.println(randomClause + " " + resolvingClause);
+                System.out.println(randomClause + " " + resolvingClause);
 //                ClauseController.printClauses();
                 //Check if a combination of those two clause resolutions has already been done
                 if(!checkResolvedClauseCombinations(randomClause.getNumber(), resolvingClause.getNumber())){
@@ -125,6 +125,31 @@ public class View {
      * @return clause containing at least one negated literal that will be used for resolution
      */
     public static Clause chooseResolvingClause(Clause clause){
+        double prob = Math.random();
+        Clause c;
+        if(prob > 0.75) {
+            c = chooseRandomResolvingClause(clause);
+        } else {
+            c = chooseEndingResolvingClause(clause);
+        }
+
+        return c;
+    }
+
+    public static Clause chooseEndingResolvingClause(Clause clause){
+        for(int i = ClauseController.getClauses().size() - 1; i >= 0; i--){
+            Clause resolvingClause = ClauseController.getClauses().get(i);
+            for(Literal l : clause.getLiterals()){
+                for(Literal n : resolvingClause.getLiterals())
+                    if(LiteralController.isNegation(l, n))
+                        return resolvingClause;
+            }
+        }
+
+        return null;
+    }
+
+    public static Clause chooseRandomResolvingClause(Clause clause){
         //Start at random clause in list
         //Iterate through list finding a clause with at least one negated literal from original clause
         //return that clause

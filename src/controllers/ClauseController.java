@@ -63,7 +63,7 @@ public abstract class ClauseController {
     public static Clause chooseRandomClause(){
         int range = clauses.size();
         int index = (int) ((Math.random() * range));
-        
+
         return clauses.get(index);
     }
 
